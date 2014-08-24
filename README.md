@@ -1,5 +1,7 @@
 # Solarized Dark theme for Textual
 
+![Screenshot](http://i.imgur.com/0yAKlN9.png)
+
 After having searched through all the different themes available for Textual we could not find one that was compatible with the latest version of Textual, so we rolled our own based on Sapientia 1.3.
 
 ## Installation
