@@ -56,6 +56,14 @@ function toggleSelectionStatusForNicknameInsideElement(e)
 	var parentSelector = e.parentNode.parentNode.parentNode;
 
 	parentSelector.classList.toggle("selectedUser");
+	
+	/* Textual 5 preview 4 works a little differently and requres
+	 that we go up another parent node. This fix may be temporary,
+	 but I want my highlight. :) We keep the existing toggle in place
+	 for backwards compatibility, since it doesn't break anything
+	 in Textual 4. */
+	var parentSelector2 = parentSelector.parentNode;
+	parentSelector2.classList.toggle("selectedUser");
 }
 
 function userNicknameSingleClickEvent(e)
