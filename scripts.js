@@ -1,20 +1,20 @@
-/* Defined in: "Textual.app -> Contents -> Resources -> JavaScript -> API -> core.js" */
+/* Defined in: "Textual 5.app -> Contents -> Resources -> JavaScript -> API -> core.js" */
 
 var mappedSelectedUsers = new Array();
 
-Textual.viewFinishedLoading = function()
+Textual.viewBodyDidLoad = function()
 {
-	Textual.fadeInLoadingScreen(1.00, 0.95);
+	Textual.fadeOutLoadingScreen(1.00, 0.95);
 
 	setTimeout(function() {
 		Textual.scrollToBottomOfView()
 	}, 500);
 }
 
-Textual.viewFinishedReload = function()
-{
-	Textual.viewFinishedLoading();
-}
+// Textual.viewFinishedReload = function()
+// {
+// 	Textual.viewFinishedLoading();
+// }
 
 Textual.newMessagePostedToView = function(line)
 {
@@ -53,17 +53,9 @@ function toggleSelectionStatusForNicknameInsideElement(e)
 {
 	/* e is nested as the .sender so we have to go three parents
 	 up in order to reach the parent div that owns it. */
-	var parentSelector = e.parentNode.parentNode.parentNode;
+	var parentSelector = e.parentNode.parentNode.parentNode.parentNode;
 
 	parentSelector.classList.toggle("selectedUser");
-	
-	/* Textual 5 preview 4 works a little differently and requres
-	 that we go up another parent node. This fix may be temporary,
-	 but I want my highlight. :) We keep the existing toggle in place
-	 for backwards compatibility, since it doesn't break anything
-	 in Textual 4. */
-	var parentSelector2 = parentSelector.parentNode;
-	parentSelector2.classList.toggle("selectedUser");
 }
 
 function userNicknameSingleClickEvent(e)

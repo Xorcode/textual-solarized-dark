@@ -5,7 +5,7 @@
 	padding: 0;
 	font-size: 100%;
 	word-wrap: break-word;
-}	
+}
 
 body {
 	color: #586e75;
@@ -36,6 +36,7 @@ body[viewtype=channel] div#body_home {
 
 body .line {
  	margin-top: -1px;
+	clear: both;
 }
 
 body[dir=rtl] .sender {
@@ -45,7 +46,7 @@ body[dir=rtl] .sender {
 /* Loading Screen */
 
 body div#loading_screen {
-	position:absolute; 
+	position: absolute;
 	top: 50%;
 	left: 50%;
 	margin-top: -11px;
@@ -130,7 +131,8 @@ a:hover {
 	white-space: normal;
 }
 
-#topic_bar a {
+#topic_bar a,
+#topic_bar span.channel {
 	color: #839496;
 	border-color: #839496;
 }
@@ -142,6 +144,48 @@ a:hover {
 
 /* Images */
 
+/* BEGIN COPY */
+.inlineImageCell {
+	overflow: auto;
+	display: block;
+	margin-top: 15px;
+	margin-bottom: 12px;
+}
+
+.inlineImageCell .image {
+	display: inline-block;
+	float: left;
+	margin-right: 12px;
+	margin-left: 10px;
+	min-width: 40px;
+	max-width: 90%;
+}
+
+.inlineImageCell .closeButton {
+	cursor: pointer;
+	border-radius: 5px;
+	border: 2px solid #a1a1a1;
+	color: #a1a1a1;
+	display: inline-block;
+	line-height: 14px;
+	font-size: 15px;
+	font-family: "Helvetica Neue" !important;
+	text-indent: 7px;
+	width: 16px;
+	height: 16px;
+	float: left;
+	padding-right: 7px;
+	padding-left: 0px;
+}
+
+html[systemversion^="10.9"] .inlineImageCell .closeButton,
+html[systemversion^="10.8"] .inlineImageCell .closeButton {
+	line-height: 13px;
+}
+
+/* END COPY */
+
+/* 
 body a img {
 	border: 0;
 }
@@ -151,10 +195,12 @@ body img {
 	max-width: 95%;
 	margin: 15px 15px 12px 15px;
 }
+ */
 
 /* Remember Line */
 
 div[id=mark] {
+	clear: both;
 	position: relative;
 	z-index: 295;
 	margin-top: -1px;
@@ -165,8 +211,10 @@ div[id=mark] {
 
 /* Historic Line */
 
-.historic 
-{
+#historic_messages {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
 	opacity: 0.6;
 }
 
@@ -310,7 +358,8 @@ body[dir=rtl] div[ltype*=action] .sender:after {
 body div.line[ltype*=invite],
 body div.line[ltype*=debug],
 body div.line[ltype*=rawhtml],
-body div.line[ltype*=dccfiletransfer] {
+body div.line[ltype*=dcc-file-transfer],
+body div.line[ltype*=off-the-record-encryption-status] {
 	color: #586e75;
   	z-index: 190;
 	background: #073642;
@@ -318,6 +367,12 @@ body div.line[ltype*=dccfiletransfer] {
  	padding: 2px 5px 2px 5px;
 	border-top: 1px solid #002b36;
 	border-bottom: 1px solid #002b36;
+}
+
+/* off-the-record-encryption-status Message Event */
+body div.line[ltype*=off-the-record-encryption-status] .message {
+/* 	color: #ff0000; */
+	font-weight: 700;
 }
 
 /* Message of the Day (MOTD) */
