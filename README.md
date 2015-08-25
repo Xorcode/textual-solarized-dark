@@ -1,12 +1,12 @@
 # Solarized Dark theme for Textual
 
-![Screenshot](http://i.imgur.com/0yAKlN9.png)
+![Screenshot](http://i.imgur.com/A6aUpUL.png)
 
 After having searched through all the different themes available for Textual we could not find one that was compatible with the latest version of Textual, so we rolled our own based on Sapientia 1.3.
 
 ## Installation
 
-    $ cd ~/Library/Containers/com.codeux.irc.textual/Data/Library/Application\ Support/Textual\ IRC/Styles/
+    $ cd /Library/Mobile Documents/iCloud~com~codeux~irc~textual5/Documents/Styles/
     $ git clone https://github.com/Xorcode/textual-solarized-dark.git
 
 ## Support
