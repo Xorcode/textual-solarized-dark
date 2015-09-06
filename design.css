@@ -144,7 +144,6 @@ a:hover {
 
 /* Images */
 
-/* BEGIN COPY */
 .inlineImageCell {
 	overflow: auto;
 	display: block;
@@ -182,8 +181,6 @@ html[systemversion^="10.9"] .inlineImageCell .closeButton,
 html[systemversion^="10.8"] .inlineImageCell .closeButton {
 	line-height: 13px;
 }
-
-/* END COPY */
 
 /* 
 body a img {
