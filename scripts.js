@@ -3,11 +3,11 @@
 Textual.viewBodyDidLoad = function()
 {
 	Textual.fadeOutLoadingScreen(1.00, 0.95);
-};
+}
 
-Textual.newMessagePostedToView = function(line)
+Textual.messageAddedToView = function(line, fromBuffer)
 {
-    var element = document.getElementById("line-" + line);
+	var element = document.getElementById("line-" + line);
 
 	ConversationTracking.updateNicknameWithNewMessage(element);
 }

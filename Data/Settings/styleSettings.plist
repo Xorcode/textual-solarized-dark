@@ -8,12 +8,14 @@
 	<true/>
 	<key>Indentation Offset</key>
 	<integer>6</integer>
+	<key>Nickname Color Style</key>
+	<string>HSL-dark</string>
 	<key>Nickname Format</key>
 	<string>%@%n:</string>
 	<key>Template Engine Versions</key>
 	<dict>
 		<key>default</key>
-		<integer>3</integer>
+		<integer>4</integer>
 	</dict>
 	<key>Underlying Window Color</key>
 	<string>#002b36</string>

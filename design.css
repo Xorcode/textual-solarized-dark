@@ -1,3 +1,8 @@
+
+/* Inline media */
+
+@import "inlineMedia.css";
+
 /* Basic Body Structure - Solarized Dark 2.0, based on Solarized Dark 1.0, based on Sapientia 1.3 */
 
 * {
@@ -5,6 +10,7 @@
 	padding: 0;
 	font-size: 100%;
 	word-wrap: break-word;
+	word-break: break-word;
 }
 
 body {
@@ -13,52 +19,60 @@ body {
  	z-index: 100;
 	font-size: 15pt;
 	overflow: hidden;
-	overflow-y: visible;
 	background-color: #002b36;
 	font-family: "HelveticaNeue";
 }
 
-body div#body_home {
+#body {
 	left: 0;
 	right: 0;
 	bottom: 0;
 	width: 100%;
+	max-height: 100%;
+	/* overflow: none is added here, even though it is already
+	 declared by body {} because on OS X Mavericks, there is a
+	 weird quirk that causes the horizontal slider to appear
+	 even though we only ask for the vertical one. */
+	overflow: none;
+	overflow-y: auto;
 	z-index: 100;
-	max-height: 99.99%;
 	position: absolute;
 	opacity: 0; /* Set by JavaScript */
 	-webkit-transition: opacity 0.8s linear;
 }
 
-body[viewtype=channel] div#body_home {
-	max-height: 96.5%;
+/* Only factor in height of topic bar when selected == true
+ because that is only time the topic is displayed according
+ to the logic defined by baseLayout.css */
+body[data-selected="true"][data-view-type="channel"] #body {
+	max-height: calc(100% - 2.2em); /* height minus topic */
 }
 
-body .line {
+div.line {
  	margin-top: -1px;
 	clear: both;
 }
 
-body[dir=rtl] .sender {
+body[dir="rtl"] .sender {
 	display: inline-block;
 }
 
 /* Scrolling */
 
-body[customscroller="true"]::-webkit-scrollbar {
+body[data-custom-scroller="true"]::-webkit-scrollbar {
 	width: 17px;
 }
 
-body[customscroller="true"]::-webkit-scrollbar:horizontal {
+body[data-custom-scroller="true"]::-webkit-scrollbar:horizontal {
 	height: 0;
 }
 
-body[customscroller="true"]::-webkit-scrollbar-track {
+body[data-custom-scroller="true"]::-webkit-scrollbar-track {
 	background: #393939;
 	box-shadow: inset 1px 0px 0px 0px #4b4b4b;
 }
 
-body[customscroller="true"]::-webkit-scrollbar-thumb {
+body[data-custom-scroller="true"]::-webkit-scrollbar-thumb {
 	background-color: #7c7c7c;
 	border: 4px solid transparent;
 	border-left: 5px solid transparent;
@@ -66,40 +80,36 @@ body[customscroller="true"]::-webkit-scrollbar-thumb {
 	background-clip: content-box;
 }
 
-body[customscroller="true"]::-webkit-scrollbar-thumb:hover {
+body[data-custom-scroller="true"]::-webkit-scrollbar-thumb:hover {
 	background-color: #b0b0b0;
 }
 
 /* Loading Screen */
 
-body div#loading_screen {
+#loadingScreen {
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -11px;
-	margin-left: -150px;
+	top: 45%;
+	left: calc(50% - (320px / 2)); /* half of width + padding */
 	width: 300px;
-	height: 21px;
 	font-size: 18px;
 	background: #002b36;
 	border: 1px solid #073642;
 	border-radius: 5px;
-	padding: 5px;
-	padding-left: 10px;
+	padding: 5px 10px;
 	opacity: 1; /* Set by JavaScript */
 	-webkit-transition: opacity 0.8s linear;
 }
 
 /* Time */
 
-body[dir=ltr] .time {
+body[dir="ltr"] .time {
 	color: #586e75;
-	white-space: nowrap; 
+	white-space: nowrap;
 }
 
-body[dir=rtl] .time {
+body[dir="rtl"] .time {
 	color: #586e75;
-	white-space: nowrap; 
+	white-space: nowrap;
 	padding-left: 0.4em;
 	display: inline-block;
 }
@@ -131,7 +141,7 @@ a:hover {
 
 /* Topic Bar */
 
-#topic_bar {
+#topicBar {
 	top: 0;
 	left: 0;
 	right: 0;
@@ -145,6 +155,7 @@ a:hover {
 	border-bottom: 1px solid #000a0c;
 	-webkit-box-shadow: 0 1px 5px #000a0c;
 	-webkit-transition: opacity 0.8s linear;
+	-webkit-font-smoothing: subpixel-antialiased;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -153,77 +164,24 @@ a:hover {
 /* Topic bar hover additions contributed with permission from the project:
 	<https://github.com/hbang/Simplified-Light-Modifications> */
 
-#topic_bar:hover {
+#topicBar:hover {
 	overflow: visible;
 	white-space: normal;
 }
 
-#topic_bar a,
-#topic_bar span.channel {
+#topicBar a {
 	color: #839496;
 	border-color: #839496;
 }
 
-#topic_bar a:hover {
+#topicBar a:hover {
 	color: #93a1a1;
 	border-color: #93a1a1;
 }
 
-/* Images */
-
-.inlineImageCell {
-	overflow: auto;
-	display: block;
-	margin-top: 15px;
-	margin-bottom: 12px;
-}
-
-.inlineImageCell .image {
-	display: inline-block;
-	float: left;
-	margin-right: 12px;
-	margin-left: 10px;
-	min-width: 40px;
-	max-width: 90%;
-}
-
-.inlineImageCell .closeButton {
-	cursor: pointer;
-	border-radius: 5px;
-	border: 2px solid #a1a1a1;
-	color: #a1a1a1;
-	display: inline-block;
-	line-height: 14px;
-	font-size: 15px;
-	font-family: "Helvetica Neue" !important;
-	text-indent: 7px;
-	width: 16px;
-	height: 16px;
-	float: left;
-	padding-right: 7px;
-	padding-left: 0px;
-}
-
-html[systemversion^="10.9"] .inlineImageCell .closeButton,
-html[systemversion^="10.8"] .inlineImageCell .closeButton {
-	line-height: 13px;
-}
-
-/* 
-body a img {
-	border: 0;
-}
-
-body img {
-	display: block;
-	max-width: 95%;
-	margin: 15px 15px 12px 15px;
-}
- */
-
 /* Remember Line */
 
-div[id=mark] {
+#mark {
 	clear: both;
 	position: relative;
 	z-index: 295;
@@ -233,26 +191,77 @@ div[id=mark] {
 	-webkit-transition: 0.2s linear;
 }
 
-/* Historic Line */
+/* Message buffer loading animation */
 
-#historic_messages {
-	transition: opacity 0.8s ease-in;
-	opacity: 0;
-	height: 0;
-	margin: 0;
-	padding: 0;
+.message_buffer_loading_indicator {
+	text-align: center;
+	height: 42px;
 }
 
-#historic_messages.loaded {
-	opacity: 0.6;
-	height: auto;
+.message_buffer_loading_indicator span {
+	font-family: Optima !important;
+	font-size: 35px;
+	font-weight: 600;
+	letter-spacing: 5px;
+	line-height: 43px;
+	color: #797979;
+	-webkit-animation: ellipsis-period 1.5s infinite;
+	animation: ellipsis-period 1.5s infinite;
+}
+
+.message_buffer_loading_indicator span:nth-child(1) {
+	-webkit-animation-delay: 0.0s;
+	animation-delay: 0.0s;
+}
+
+.message_buffer_loading_indicator span:nth-child(2) {
+	-webkit-animation-delay: 0.1s;
+	animation-delay: 0.1s;
+}
+
+.message_buffer_loading_indicator span:nth-child(3) {
+	-webkit-animation-delay: 0.2s;
+	animation-delay: 0.2s;
+}
+
+@keyframes ellipsis-period {
+	0% { opacity: 0.2; }
+	20% { opacity: 1.0; }
+	100% { opacity: 0.2; }
+}
+
+/* Message buffer session indicator */
+
+.message_buffer_session_indicator {
+	display: flex;
+	display: -webkit-flex;
+	padding: 0.5em 0;
+}
+
+.message_buffer_session_indicator > hr {
+	background: #444;
+	border: 0;
+	height: 1px;
+	margin-top: 0.6em;
+	flex: 1;
+	-webkit-flex: 1;
+}
+
+.message_buffer_session_indicator > span {
+	font-style: oblique;
+	margin: 0 1em;
+	color: #919191;
+}
+
+.message_buffer_session_indicator + #mark {
+	display: none;
 }
 
 /* NOTICE/CTCP/WALLOPS */
 
-body div.line[ltype*=ctcp],
-body div.line[ltype*=notice],
-body div.line[ltype*=wallops] {
+div.line[data-line-type="ctcp"],
+div.line[data-line-type="notice"],
+div.line[data-line-type="wallops"] {
 	color: #dc322f;
   	z-index: 191;
 	background: rgba(203,75,22,.2);
@@ -262,48 +271,48 @@ body div.line[ltype*=wallops] {
 	border-bottom: 1px solid rgba(203,75,22,.3);
 }
 
-body div.line[ltype*=ctcp] a,
-body div.line[ltype*=notice] a,
-body div.line[ltype*=wallops] a {
+div.line[data-line-type="ctcp"] a,
+div.line[data-line-type="notice"] a,
+div.line[data-line-type="wallops"] a {
 	color: #dc322f;
 	border-color: #dc322f;
 }
 
-body div.line[ltype*=ctcp] a:hover,
-body div.line[ltype*=notice] a:hover,
-body div.line[ltype*=wallops] a:hover {
+div.line[data-line-type="ctcp"] a:hover,
+div.line[data-line-type="notice"] a:hover,
+div.line[data-line-type="wallops"] a:hover {
 	color: #cb4b16;
 	border-color: #cb4b16;
 }
 
-body div[ltype*=notice] .sender {
+div.line[data-line-type="notice"] .sender {
 	color: #cb4b16;
 	font-weight: 700;
 }
 
-/* SELECTED USER MESSAGES */
+/* Selected User Messages */
 
 .sender {
 	cursor: pointer;
 }
 
-body div.line[ltype*=privmsg]:not(.selectedUser),
-body div.line[ltype*=action]:not(.selectedUser) {
-    transition-property: border-top, border-bottom, background-color;
+div.line[data-line-type="privmsg"]:not(.selectedUser),
+div.line[data-line-type="action"]:not(.selectedUser) {
+	transition-property: border-top, border-bottom, background-color;
 	transition-duration: 0.5s, 0.5s, 0.5s;
 }
 
-body div.line[ltype*=privmsg] .time:not(.selectedUser),
-body div.line[ltype*=action] .time:not(.selectedUser) {
-    transition: color 0.5s;
+div.line[data-line-type="privmsg"] .time:not(.selectedUser),
+div.line[data-line-type="action"] .time:not(.selectedUser) {
+	transition: color 0.5s;
 }
 
-body div.line.selectedUser[highlight=false] .time {
-    transition: color 0.5s ease-in;
+div.line.selectedUser[data-highlight="false"] .time {
+	transition: color 0.5s ease-in;
 /*	color: #000;*/
 }
 
-body div.line.selectedUser[highlight=false] {
+div.line.selectedUser[data-highlight="false"] {
     transition-property: border-top, border-bottom, background-color;
 	transition-duration: 0.5s, 0.5s, 0.5s;
 
@@ -316,15 +325,17 @@ body div.line.selectedUser[highlight=false] {
 
 /* PRIVMSG */
 
-body div.line[ltype*=privmsg][highlight=false] {
-	padding: 2px 5px 2px 5px;
+div.line[data-line-type="privmsg"][data-highlight="false"] {
+ 	padding: 2px 5px 2px 5px;
 	border-top: 1px solid transparent;
 	border-bottom: 1px solid transparent;
 /*	background-color: none;*/
 }
 
-body div.line[ltype*=privmsg][highlight=true],
-body div.line[ltype*=action][highlight=true] {
+div.line[data-line-type="privmsg"][data-highlight="true"],
+div.line[data-line-type="action"][data-highlight="true"] {
+  	z-index: 191;
+  	position: relative;
 	font-weight: normal;
  	padding: 2px 5px 2px 5px;
 	border-top: 1px solid #994C00;
@@ -332,64 +343,63 @@ body div.line[ltype*=action][highlight=true] {
   	background-color: #2d1e10 !important;
 }
 
-body div[ltype*="privmsg"] .message {
+div.line[data-line-type="privmsg"] .message {
 	color: #aaa;
 }
 
-body div[ltype*=privmsg][mtype*=myself] .message {
+div.line[data-line-type="privmsg"][data-member-type="myself"] .message {
 	color: #839496;
 }
 
-body div[ltype*=privmsg] .sender {
+div.line[data-line-type="privmsg"] .sender {
 	font-weight: 700;
 }
 
 /* ACTION */
 
-body div.line[ltype*=action] {
+div.line[data-line-type="action"] {
  	padding: 3px 5px 3px 5px;
 }
 
-body div[ltype*="action"] .message {
+div.line[data-line-type="action"] .message {
 	color: #aaa;
 }
 
-body div[ltype*=action] .sender {
+div.line[data-line-type="action"] .sender {
 	font-weight: 700;
 }
 
-body div[ltype*=action][mtype*=myself] .sender,
-body div[ltype*=action][mtype*=myself] .message {
+div.line[data-line-type="action"][data-member-type="myself"] .sender,
+div.line[data-line-type="action"][data-member-type="myself"] .message {
 	color: #839496;
 }
 
-body[dir=ltr] div[ltype*=action] .sender:before {
+body[dir="ltr"] div.line[data-line-type="action"] .sender:before {
 	content: "\2022";
 	margin-right: 0.4em;
 }
 
-body[dir=ltr] div[ltype*=action] .sender:after {
+body[dir="ltr"] div.line[data-line-type="action"] .sender:after {
 	content: "";
   	/* margin-right: 0.4em; */
 }
 
-body[dir=rtl] div[ltype*=action] .sender:before {
+body[dir="rtl"] div.line[data-line-type="action"] .sender:before {
 	content: "\2022";
 	margin-left: 0.4em;
 }
 
-body[dir=rtl] div[ltype*=action] .sender:after {
+body[dir="rtl"] div.line[data-line-type="action"] .sender:after {
 	content: "";
   	/* margin-left: 0.4em; */
 }
 
 /* DEBUG/INVITE */
 
-body div.line[ltype*=invite],
-body div.line[ltype*=debug],
-body div.line[ltype*=rawhtml],
-body div.line[ltype*=dcc-file-transfer],
-body div.line[ltype*=off-the-record-encryption-status] {
+div.line[data-line-type="invite"],
+div.line[data-line-type="debug"],
+div.line[data-line-type="dcc-file-transfer"],
+div.line[data-line-type="off-the-record-encryption-status"] {
 	color: #586e75;
   	z-index: 190;
 	background: #073642;
@@ -400,261 +410,102 @@ body div.line[ltype*=off-the-record-encryption-status] {
 }
 
 /* off-the-record-encryption-status Message Event */
-body div.line[ltype*=off-the-record-encryption-status] .message {
+div.line[data-line-type="off-the-record-encryption-status"]  .message {
 /* 	color: #ff0000; */
 	font-weight: 700;
 }
 
 /* Message of the Day (MOTD) */
 /* 720, 721, 722 are used by ShadowIRCd for Oper MOTD. */
-/* 372, 375, 376 are normal MOTD shared by several IRCds. */ 
+/* 372, 375, 376 are normal MOTD shared by several IRCds. */
 
-body div.line[command="372"],
-body div.line[command="721"] {
+div.line[data-command="372"],
+div.line[data-command="721"] {
 	border: none;
 	padding-top: 3px;
 	padding-bottom: 3px;
 }
 
-body div.line[command="375"],
-body div.line[command="720"] { /* Start. */
+div.line[data-command="375"],
+div.line[data-command="720"] { /* Start. */
 	border-bottom: none;
 	padding-top: 2px;
 	padding-bottom: 3px;
 }
 
-body div.line[command="376"],
-body div.line[command="722"] { /* End. */
+div.line[data-command="376"],
+div.line[data-command="722"] { /* End. */
 	border-top: none;
 	padding-top: 3px;
 	padding-bottom: 3px;
 }
 
-body div.line[command="372"] .message,
-body div.line[command="375"] .message,
-body div.line[command="376"] .message 
-body div.line[command="720"] .message,
-body div.line[command="721"] .message,
-body div.line[command="722"] .message {
+div.line[data-command="372"] .message,
+div.line[data-command="375"] .message,
+div.line[data-command="376"] .message
+div.line[data-command="720"] .message,
+div.line[data-command="721"] .message,
+div.line[data-command="722"] .message {
 	font-family: "Menlo" !important;
 }
 
 /* GENERAL EVENT */
 
-body div.line[ltype*=join],
-body div.line[ltype*=part],
-body div.line[ltype*=kick],
-body div.line[ltype*=quit],
-body div.line[ltype*=kill],
-body div.line[ltype*=nick],
-body div.line[ltype*=mode],
-body div.line[ltype*=topic],
-body div.line[ltype*=website] {
+div.line[data-line-type="join"],
+div.line[data-line-type="part"],
+div.line[data-line-type="kick"],
+div.line[data-line-type="quit"],
+div.line[data-line-type="kill"],
+div.line[data-line-type="nick"],
+div.line[data-line-type="mode"],
+div.line[data-line-type="topic"],
+div.line[data-line-type="website"] {
  	padding: 3px 5px 3px 5px;
 	color: #586e75;
 }
 
-body[dir=ltr] div[ltype*=join] .message:before {
+body[dir="ltr"] div.line[data-line-type="join"] .message:before {
 	content: "→";
   	color: #859900;
   	/* margin-right: 0.4em; */
 }
 
-body[dir=ltr] div[ltype*=kick] .message:before,
-body[dir=ltr] div[ltype*=part] .message:before,
-body[dir=ltr] div[ltype*=quit] .message:before {
+body[dir="ltr"] div.line[data-line-type="kick"] .message:before,
+body[dir="ltr"] div.line[data-line-type="part"] .message:before,
+body[dir="ltr"] div.line[data-line-type="quit"] .message:before {
 	content: "←";
   	color: #dc322f;
   	/* margin-right: 0.4em; */
 }
 
-body[dir=ltr] div[ltype*=nick] .message:before {
-	content:"•";
+body[dir="ltr"] div.line[data-line-type="nick"] .message:before {
+	content: "•";
   	color: #859900;
   	/* margin-right: 0.4em; */
 }
 
-body[dir=rtl] div[ltype*=join] .message:before {
+body[dir="rtl"] div.line[data-line-type="join"] .message:before {
 	content: "→";
   	color: #859900;
-  	/* margin-left: 0.4em; */
+  	/* margin-right: 0.4em; */
 }
 
-body[dir=rtl] div[ltype*=kick] .message:before,
-body[dir=rtl] div[ltype*=part] .message:before,
-body[dir=rtl] div[ltype*=quit] .message:before {
+body[dir="rtl"] div.line[data-line-type="kick"] .message:before,
+body[dir="rtl"] div.line[data-line-type="part"] .message:before,
+body[dir="rtl"] div.line[data-line-type="quit"] .message:before {
 	content: "←";
   	color: #dc322f;
   	/* margin-left: 0.4em; */
 }
 
-body[dir=rtl] div[ltype*=nick] .message:before {
-	content:"•";
+body[dir="rtl"] div.line[data-line-type="nick"] .message:before {
+	content: "•";
   	color: #859900;
   	/* margin-left: 0.4em; */
 }
 
 /* Nickname Colors */
 
-body .inline_nickname {
+.inlineSender {
 	font-weight: 700;
-}
-
-body div[ltype*=privmsg] .sender[mtype*=myself] { 
-	color: #839496; 
-}
-
-body .sender[mtype*=normal][colornumber='0'], 
-body .inline_nickname[colornumber='0'] { 
-	color: #b58900; 
-}
-
-body .sender[mtype*=normal][colornumber='1'], 
-body .inline_nickname[colornumber='1'] { 
-	color: #cb4b16; 
-}
-
-body .sender[mtype*=normal][colornumber='2'], 
-body .inline_nickname[colornumber='2'] { 
-	color: #dc322f; 
-}
-
-body .sender[mtype*=normal][colornumber='3'], 
-body .inline_nickname[colornumber='3'] { 
-	color: #d33682; 
-}
-
-body .sender[mtype*=normal][colornumber='4'], 
-body .inline_nickname[colornumber='4'] { 
-	color: #6c71c4; 
-}
-
-body .sender[mtype*=normal][colornumber='5'], 
-body .inline_nickname[colornumber='5'] { 
-	color: #268bd2; 
-}
-
-body .sender[mtype*=normal][colornumber='6'],
-body .inline_nickname[colornumber='6'] { 
-	color: #2aa198; 
-}
-
-body .sender[mtype*=normal][colornumber='7'], 
-body .inline_nickname[colornumber='7'] { 
-	color: #859900; 
-}
-
-body .sender[mtype*=normal][colornumber='8'],
-body .inline_nickname[colornumber='8'] { 
-	color: #b58900; 
-}
-
-body .sender[mtype*=normal][colornumber='9'], 
-body .inline_nickname[colornumber='9'] { 
-	color: #93a1a1; 
-}
-
-body .sender[mtype*=normal][colornumber='10'], 
-body .inline_nickname[colornumber='10'] { 
-	color: #cb4b16; 
-}
-
-body .sender[mtype*=normal][colornumber='11'], 
-body .inline_nickname[colornumber='11'] { 
-	color: #dc322f; 
-}
-
-body .sender[mtype*=normal][colornumber='12'], 
-body .inline_nickname[colornumber='12'] { 
-	color: #d33682; 
-}
-
-body .sender[mtype*=normal][colornumber='13'], 
-body .inline_nickname[colornumber='13'] { 
-	color: #6c71c4; 
-}
-
-body .sender[mtype*=normal][colornumber='14'], 
-body .inline_nickname[colornumber='14'] { 
-	color: #268bd2; 
-}
-
-body .sender[mtype*=normal][colornumber='15'], 
-body .inline_nickname[colornumber='15'] { 
-	color: #2aa198;
-}
-
-body .sender[mtype*=normal][colornumber='16'], 
-body .inline_nickname[colornumber='16'] { 
-	color: #859900;
-}
-
-body .sender[mtype*=normal][colornumber='17'], 
-body .inline_nickname[colornumber='17'] { 
-	color: #93a1a1;
-}
-
-body .sender[mtype*=normal][colornumber='18'], 
-body .inline_nickname[colornumber='18'] { 
-	color: #839496;
-}
-
-body .sender[mtype*=normal][colornumber='19'], 
-body .inline_nickname[colornumber='19'] { 
-	color: #93a1a1;
-}
-
-body .sender[mtype*=normal][colornumber='20'], 
-body .inline_nickname[colornumber='20'] { 
-	color: #b58900;
-}
-
-body .sender[mtype*=normal][colornumber='21'], 
-body .inline_nickname[colornumber='21'] { 
-	color: #cb4b16;
-}
-
-body .sender[mtype*=normal][colornumber='22'], 
-body .inline_nickname[colornumber='22'] { 
-	color: #dc322f;
-}
-
-body .sender[mtype*=normal][colornumber='23'], 
-body .inline_nickname[colornumber='23'] { 
-	color: #d33682;
-}
-
-body .sender[mtype*=normal][colornumber='24'], 
-body .inline_nickname[colornumber='24'] { 
-	color: #6c71c4;
-}
-
-body .sender[mtype*=normal][colornumber='25'], 
-body .inline_nickname[colornumber='25'] { 
-	color: #268bd2;
-}
-
-body .sender[mtype*=normal][colornumber='26'], 
-body .inline_nickname[colornumber='26'] { 
-	color: #2aa198;
-}
-
-body .sender[mtype*=normal][colornumber='27'], 
-body .inline_nickname[colornumber='27'] { 
-	color: #859900;
-}
-
-body .sender[mtype*=normal][colornumber='28'], 
-body .inline_nickname[colornumber='28'] { 
-	color: #839496;
-}
-
-body .sender[mtype*=normal][colornumber='29'], 
-body .inline_nickname[colornumber='29'] { 
-	color: #93a1a1;
-}
-
-body .sender[mtype*=normal][colornumber='30'], 
-body .inline_nickname[colornumber='30'] { 
-	color: #b58900;
 }
